@@ -3,10 +3,11 @@ import { MenuService } from './services/menu.service';
 import { Menu } from './models/menu.model';
 import { CommonModule } from '@angular/common';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, NzDropDownModule],
+  imports: [CommonModule, NzDropDownModule, RouterModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
   providers: [MenuService]

@@ -1,39 +1,35 @@
-<a class="header-logo"></a>
-
-<!-- <ng-container>
-  <ul nz-menu nzTheme="dark" nzMode="horizontal">
-    <li nz-menu-item>nav 1</li>
-    <li nz-menu-item>nav 2</li>
-    <li nz-menu-item>nav 3</li>
-  </ul>
-</ng-container> -->
-
 <nav class="header-menu">
-  <!-- 遍历一级菜单 -->
-  @for (menu of menuTree; track menu.id) {
-    @if (menu.children && menu.children.length > 0) {
-      <!-- 有子菜单的下拉菜单 -->
-      <a nz-dropdown [nzDropdownMenu]="menuDropDown" class="menu-item">
-        <span>
-          {{menu.name}}
-          <span nz-icon nzType="down"></span>
-        </span>
-        <nz-dropdown-menu #menuDropDown="nzDropdownMenu">
-          <ul nz-menu>
-            <!-- 遍历二级子菜单 -->
-            @for (child of menu.children; track child.id) {
-              <li nz-menu-item (click)="onMenuClick(child)">
-                {{child.name}}
-              </li>
-            }
-          </ul>
-        </nz-dropdown-menu>
-      </a>
+  <ng-container>
+    <!-- 1.Logo -->
+    <a class="header-logo"></a>
+
+    <!-- 2.菜单 -->
+    <!-- 遍历一级菜单 -->
+    @for (menu of menuTree; track menu.id) { @if (menu.children && menu.children.length > 0) {
+    <!-- 有子菜单的下拉菜单 -->
+    <a nz-dropdown [nzDropdownMenu]="menuDropDown" class="menu-item" [routerLink]="menu.path">
+      <span>
+        {{ menu.name }}
+        <span nz-icon nzType="down"></span>
+      </span>
+      <nz-dropdown-menu #menuDropDown="nzDropdownMenu">
+        <ul nz-menu>
+          <!-- 遍历二级子菜单 -->
+          @for (child of menu.children; track child.id) {
+          <li nz-menu-item (click)="onMenuClick(child)">
+            {{ child.name }}
+          </li>
+          }
+        </ul>
+      </nz-dropdown-menu>
+    </a>
     } @else {
-      <!-- 没有子菜单的直接菜单项 -->
-      <a class="menu-item" (click)="onMenuClick(menu)">
-        {{menu.name}}
-      </a>
-    }
-  }
+    <!-- 没有子菜单的直接菜单项 -->
+    <a class="menu-item" (click)="onMenuClick(menu)" routerLink="{{ menu.path }}">
+      {{ menu.name }}
+    </a>
+    } }
+
+    <!-- 3.注册登录/如果已登录，则展示用户下拉菜单 -->
+  </ng-container>
 </nav>

@@ -7,14 +7,14 @@ import { Menu } from '../models/menu.model';
 export class MenuService {
   public getMenuList(): Menu[] {
     return [
-      { id: 1, name: '首页', level: 1, order: 1 },
-      { id: 2, name: '心理测评', level: 1, order: 2 },
-      { id: 3, name: '我的测评', level: 1, order: 3 },
-      { id: 4, name: '关于我们', level: 1, order: 4 },
-      { id: 5, name: '登录注册', level: 1, order: 5 },
-      { id: 6, name: '抑郁测评', level: 2, order: 6 },
-      { id: 7, name: '焦虑测评', level: 2, order: 1, parentId: 2 },
-      { id: 8, name: '其他测评', level: 2, order: 2, parentId: 2 }
+      { id: 1, name: 'Home', level: 1, order: 1, path: '/home' },
+      { id: 2, name: 'PsyScale', level: 1, order: 2, path: '/evaluation' },
+      { id: 3, name: 'MyEvaluations', level: 1, order: 3, path: '/my-evaluations' },
+      { id: 4, name: 'About', level: 1, order: 4, path: '/about' },
+      { id: 5, name: 'Login', level: 1, order: 5, path: '/login' },
+      { id: 6, name: 'Evaluation-Health', level: 2, order: 6, parentId: 2, path: '/evaluation/health' },
+      { id: 7, name: 'Evaluation-Career', level: 2, order: 7, parentId: 2, path: '/evaluation/career' },
+      { id: 8, name: 'Evaluation-Others', level: 2, order: 8, parentId: 2, path: '/evaluation/others' }
     ];
   }
 }
