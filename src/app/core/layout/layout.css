@@ -1,0 +1,29 @@
+nz-layout {
+  /* height: 100%; */
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  /* 使用 100vh 确保占据整个视口高度 */
+  min-height: 100vh;
+}
+
+nz-header {
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+}
+
+nz-content {
+  padding: 0 50px;
+  background: #fff;
+  /* min-height: 280px; */
+  /* 4. 核心：设置 flex-grow: 1 */
+  /* 这会让 main 元素伸展，占据 header 和 footer 之外的所有剩余空间，从而将 footer “推”到最底部。*/
+  flex-grow: 1;
+  padding: 20px;
+}
+
+nz-footer {
+  text-align: center;
+  width: 100%;
+}

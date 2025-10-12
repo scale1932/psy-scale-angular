@@ -1,6 +1,12 @@
 # PsyScaleAngular
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.2.
+```
+ng new psy-scale-angular
+cd .\psy-scale-angular\
+ng add ng-zorro-antd
+ng add @ngxs/store
+```
 
 ## Development server
 
