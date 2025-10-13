@@ -1,80 +1,108 @@
 import { Injectable, inject } from '@angular/core';
 import { State, Action, Selector, StateContext } from '@ngxs/store';
-import { FetchAuthUser, Login } from './auth.actions';
+import { CheckPermissions, Login, LoginSuccess, RefreshToken, RefreshTokenSuccess } from './auth.actions';
 import { AuthService } from '../../services/auth.service';
-import { User, TokenStatus } from '../../models/auth-user';
-import { TokenStorageService } from '../../services/token.storage.service';
-import { catchError, switchMap, throwError } from 'rxjs';
+import { User } from '../../models/auth-user';
+import { tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface AuthStateModel {
-  isLoggedIn: boolean;
-  user?: User;
-  hasLoginError: boolean;
-  isLoadingLogin: boolean;
-  accessTokenStatus: TokenStatus;
-  refreshTokenStatus: TokenStatus;
+  access_token: string | null;
+  refreshToken: string | null;
+  user: User | null;
+  permissions: string[];
+  isAuthenticated: boolean;
+  tokenExpiration: number | null;
 }
 
-const initialState: AuthStateModel = {
-  isLoggedIn: false,
-  user: undefined,
-  hasLoginError: false,
-  isLoadingLogin: false,
-  accessTokenStatus: TokenStatus.PENDING,
-  refreshTokenStatus: TokenStatus.PENDING
-};
-
+// auth.state.ts
 @State<AuthStateModel>({
   name: 'auth',
-  defaults: initialState
+  defaults: {
+    access_token: null,
+    refreshToken: null,
+    user: null,
+    permissions: [],
+    isAuthenticated: false,
+    tokenExpiration: null
+  }
 })
 @Injectable()
 export class AuthState {
-
-  private readonly authService = inject(AuthService);
-  private readonly tokenStorageService = inject(TokenStorageService);
+  constructor(private authService: AuthService, private router: Router) {}
 
   @Selector()
-  static getState(state: AuthStateModel) {
-    return state;
+  static isAuthenticated(state: AuthStateModel): boolean {
+    return state.isAuthenticated;
+  }
+
+  @Selector()
+  static hasPermissions(state: AuthStateModel): (requiredPermissions: string[]) => boolean {
+    return (requiredPermissions: string[]) => {
+      if (!requiredPermissions.length) return true;
+      return requiredPermissions.every(permission =>
+        state.permissions.includes(permission)
+      );
+    };
   }
 
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
-    this.authService.login(action.username, action.password, action.captchaCode).pipe(
-      switchMap(token => {
-        this.tokenStorageService.saveToken(token);
-        ctx.patchState({
-          isLoggedIn: true,
-          hasLoginError: false,
-          isLoadingLogin: false,
-          accessTokenStatus: TokenStatus.VALID,
-          refreshTokenStatus: TokenStatus.VALID
-        });
-
-        // Redirect to return url or home
-        // const returnUrl = this.activatedRoute.snapshot.queryParams['returnUrl'] || '/';
-        // this.router.navigateByUrl(returnUrl);
-        return ctx.dispatch(new FetchAuthUser());
-      }),
-      catchError(err => {
-        ctx.patchState({
-          isLoggedIn: false,
-          hasLoginError: true,
-          isLoadingLogin: false,
-          accessTokenStatus: TokenStatus.INVALID,
-          refreshTokenStatus: TokenStatus.INVALID
-        });
-
-        this.tokenStorageService.removeToken();
-        return throwError(() => err);
-      }
-    ));
+    return this.authService.login(action.payload).pipe(
+      tap((response: any) => {
+        ctx.dispatch(new LoginSuccess({
+          access_token: response.access_token,
+          refreshToken: response.refresh_token,
+          user: response.user
+        }));
+      })
+    );
   }
 
-  @Action(FetchAuthUser)
-  fetchAuthUser(ctx: StateContext<AuthStateModel>) {
-    //return this.authService.fetchAuthUser().pipe();
+  @Action(LoginSuccess)
+  loginSuccess(ctx: StateContext<AuthStateModel>, action: LoginSuccess) {
+    const { access_token, refreshToken, user } = action.payload;
+
+    // 存储到本地
+    this.authService.storeTokens(access_token, refreshToken);
+
+    // 更新状态
+    ctx.patchState({
+      access_token,
+      refreshToken,
+      user,
+      isAuthenticated: true,
+      //permissions: user.roles.flatMap(role => role.permissions)
+      permissions: []
+    });
+
+    // 导航到首页
+    this.router.navigate(['/dashboard']);
   }
 
+  @Action(RefreshToken)
+  refreshToken(ctx: StateContext<AuthStateModel>) {
+    return this.authService.refreshToken().pipe(
+      tap((response: any) => {
+        ctx.dispatch(new RefreshTokenSuccess({
+          token: response.access_token,
+          refreshToken: response.refresh_token
+        }));
+      })
+    );
+  }
+
+  @Action(CheckPermissions)
+  checkPermissions(ctx: StateContext<AuthStateModel>, action: CheckPermissions) {
+    const state = ctx.getState();
+    const hasAccess = action.requiredPermissions.every(permission =>
+      state.permissions.includes(permission)
+    );
+
+    if (!hasAccess) {
+      this.router.navigate(['/unauthorized']);
+    }
+
+    return hasAccess;
+  }
 }
