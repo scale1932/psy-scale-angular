@@ -5,12 +5,16 @@ import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { CheckAuthStatus, LoginFailed, Logout } from '../store/auth/auth.actions';
+import { environment } from '../../../../environments/environment';
+
 
 // auth.service.ts
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly TOKEN_KEY = 'access_token';
   private readonly REFRESH_TOKEN_KEY = 'refresh_token';
+  private readonly baseUrl = environment.api.baseUrl;
+  // const url = `${environment.api.authUrl}/login`;
 
   constructor(
     private http: HttpClient,
@@ -55,4 +59,12 @@ export class AuthService {
     localStorage.setItem(this.TOKEN_KEY, token);
     localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
   }
+
+  // 根据环境判断是否使用mock数据
+  // getUsers(): Observable<User[]> {
+  //   if (environment.features.enableMock) {
+  //     return of(this.getMockUsers());
+  //   }
+  //   return this.http.get<User[]>(`${this.baseUrl}/users`);
+  // }
 }
