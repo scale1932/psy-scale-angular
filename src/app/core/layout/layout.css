@@ -5,6 +5,7 @@ nz-layout {
   flex-direction: column;
   /* 使用 100vh 确保占据整个视口高度 */
   min-height: 100vh;
+  background-color: #f0f2f5;
 }
 
 nz-header {

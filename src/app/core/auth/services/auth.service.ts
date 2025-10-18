@@ -11,8 +11,8 @@ import { environment } from '../../../../environments/environment';
 // auth.service.ts
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  public static readonly TOKEN_KEY = 'access_token';
-  public static  readonly REFRESH_TOKEN_KEY = 'refresh_token';
+  private readonly TOKEN_KEY = 'access_token';
+  private  readonly REFRESH_TOKEN_KEY = 'refresh_token';
   private readonly baseUrl = environment.api.baseUrl;
   // const url = `${environment.api.authUrl}/login`;
 

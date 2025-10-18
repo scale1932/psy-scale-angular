@@ -4,7 +4,6 @@ import { Store } from '@ngxs/store';
 import { Router } from '@angular/router';
 import { HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from './services/auth.service';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Logout, RefreshToken } from './store/auth/auth.actions';
@@ -16,7 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private store: Store, private router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem(AuthService.TOKEN_KEY);
+    const token = localStorage.getItem('access_token');
      if (token && this.isTokenExpiring(token)) {
       // Token即将过期，自动刷新
       this.store.dispatch(new RefreshToken());

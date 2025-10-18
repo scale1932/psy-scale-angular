@@ -1,0 +1,37 @@
+# -----------------------------------------------------------
+# Spring Security OAuth2 Client Configuration for HMRC
+# -----------------------------------------------------------
+server:
+  port: 8080 # Backend port
+
+security:
+  oauth2:
+    client:
+      registration:
+        # 'user' 注册用于处理 HMRC 用户认证授权码模式 (Authorization Code)
+        user:
+          provider: userprovider
+          client-id: YOUR_HMRC_CLIENT_ID # 替换为您的实际 ID
+          client-secret: YOUR_HMRC_CLIENT_SECRET # 替换为您的实际 Secret (非常重要)
+          authorization-grant-type: authorization_code
+          # Spring Security 内部的回调 URI。{baseUrl} 会自动替换为您的应用地址
+          # {registrationId} 会替换为 'user'
+          redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+          # 替换为 HMRC 要求的 Scope，例如 read:vat write:vat
+          scope: "hello"
+          client-authentication-method: client_secret_post
+      provider:
+        userprovider:
+          # HMRC 的 Token 交换端点
+          token-uri: https://api.service.hmrc.gov.uk/oauth/token
+          # HMRC 的授权端点
+          authorization-uri: https://api.service.hmrc.gov.uk/oauth/authorize
+
+# -----------------------------------------------------------
+# 前端应用地址配置（用于最终重定向）
+# -----------------------------------------------------------
+app:
+  # 授权成功后，重定向到 Angular 前端的成功页面
+  frontend-success-url: "http://localhost:4200/auth/success"
+  # 授权失败后，重定向到 Angular 前端的失败页面
+  frontend-failure-url: "http://localhost:4200/auth/failure"

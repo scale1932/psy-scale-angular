@@ -1,0 +1,301 @@
+/* auth.component.css */
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.auth-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="rgba(255,255,255,0.05)" points="0,1000 1000,0 1000,1000"/></svg>');
+  background-size: cover;
+}
+
+.auth-card {
+  width: 440px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+  animation: cardEntrance 0.6s ease-out;
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.auth-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.auth-subtitle {
+  color: #718096;
+  font-size: 14px;
+}
+
+/* 标签页样式 */
+::ng-deep .auth-tabs .ant-tabs-nav {
+  margin-bottom: 32px;
+}
+
+::ng-deep .auth-tabs .ant-tabs-nav::before {
+  display: none;
+}
+
+::ng-deep .auth-tabs .ant-tabs-tab {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #a0aec0;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .auth-tabs .ant-tabs-tab:hover {
+  color: #667eea;
+}
+
+::ng-deep .auth-tabs .ant-tabs-tab-active {
+  color: #667eea;
+}
+
+::ng-deep .auth-tabs .ant-tabs-ink-bar {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  height: 3px;
+  border-radius: 2px;
+}
+
+/* 表单样式 */
+.auth-form {
+  margin-top: 8px;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+::ng-deep .form-group .ant-form-item {
+  margin-bottom: 0;
+}
+
+::ng-deep .form-group .ant-input {
+  height: 48px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  padding: 0 16px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+::ng-deep .form-group .ant-input:hover {
+  border-color: #cbd5e0;
+}
+
+::ng-deep .form-group .ant-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+::ng-deep .form-group .ant-input-affix-wrapper {
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  padding: 0 16px;
+  transition: all 0.3s ease;
+}
+
+::ng-deep .form-group .ant-input-affix-wrapper:hover {
+  border-color: #cbd5e0;
+}
+
+::ng-deep .form-group .ant-input-affix-wrapper-focused {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+::ng-deep .form-group .ant-form-item-explain-error {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #e53e3e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 验证码区域 */
+.captcha-group {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.captcha-input {
+  flex: 1;
+}
+
+.captcha-btn {
+  height: 48px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  background: #f7fafc;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #4a5568;
+  transition: all 0.3s ease;
+  min-width: 100px;
+}
+
+.captcha-btn:hover {
+  background: #edf2f7;
+  border-color: #cbd5e0;
+  color: #2d3748;
+  transform: translateY(-1px);
+}
+
+/* 提交按钮 */
+.submit-btn {
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a6fd8, #6a4190);
+}
+
+.submit-btn:disabled {
+  background: #cbd5e0;
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* 社交登录选项 */
+.social-divider {
+  text-align: center;
+  margin: 32px 0;
+  position: relative;
+  color: #a0aec0;
+  font-size: 14px;
+}
+
+.social-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.social-divider span {
+  background: white;
+  padding: 0 16px;
+  position: relative;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.social-btn {
+  flex: 1;
+  height: 44px;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+  border-color: #cbd5e0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.social-btn.google {
+  color: #db4437;
+}
+
+.social-btn.github {
+  color: #333;
+}
+
+.social-btn.wechat {
+  color: #07c160;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 16px;
+  }
+
+  .auth-card {
+    width: 100%;
+    padding: 32px 24px;
+  }
+
+  .auth-title {
+    font-size: 24px;
+  }
+
+  ::ng-deep .auth-tabs .ant-tabs-tab {
+    padding: 10px 16px;
+    font-size: 15px;
+  }
+}

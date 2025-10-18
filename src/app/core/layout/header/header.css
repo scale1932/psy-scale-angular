@@ -29,3 +29,7 @@
 nz-dropdown-menu {
   min-width: 120px;
 }
+
+nz-icon {
+  background: red;
+}
