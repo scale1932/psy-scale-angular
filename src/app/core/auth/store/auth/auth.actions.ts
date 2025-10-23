@@ -1,6 +1,6 @@
 import { User } from "../../models/auth-user";
 
-// auth.actions.ts
+// login.actions.ts
 export class Login {
   static readonly type = '[Auth] Login';
   constructor(public payload: { username: string; password: string }) {}

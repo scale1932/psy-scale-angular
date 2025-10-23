@@ -6,7 +6,7 @@ import { HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { Logout, RefreshToken } from './store/auth/auth.actions';
+import { Logout, RefreshToken } from '../store/auth/auth.actions';
 
 @Injectable({
   providedIn: 'root'

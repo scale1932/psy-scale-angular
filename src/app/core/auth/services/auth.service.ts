@@ -8,7 +8,7 @@ import { CheckAuthStatus, LoginFailed, Logout } from '../store/auth/auth.actions
 import { environment } from '../../../../environments/environment';
 
 
-// auth.service.ts
+// login.service.ts
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly TOKEN_KEY = 'access_token';
@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   login(credentials: { username: string; password: string }): Observable<AccessToken> {
-    // return this.http.post('/api/auth/login', credentials).pipe(
+    // return this.http.post('/api/login/login', credentials).pipe(
     //   catchError(error => {
     //     this.store.dispatch(new LoginFailed(error.message));
     //     return throwError(() => error);
@@ -62,7 +62,7 @@ export class AuthService {
 
   // 根据环境判断是否使用mock数据
   // getUsers(): Observable<User[]> {
-  //   if (environment.features.enableMock) {
+  //   if (environment.pages.enableMock) {
   //     return of(this.getMockUsers());
   //   }
   //   return this.http.get<User[]>(`${this.baseUrl}/users`);

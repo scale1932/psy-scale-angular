@@ -15,7 +15,7 @@ export interface AuthStateModel {
   tokenExpiration: number | null;
 }
 
-// auth.state.ts
+// login.state.ts
 @State<AuthStateModel>({
   name: 'auth',
   defaults: {

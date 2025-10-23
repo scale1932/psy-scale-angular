@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { MenuService } from './services/menu.service';
-import { Menu } from './models/menu.model';
+import { MenuService } from '../../services/menu.service';
+import { Menu } from '../../models/menu.model';
 import { CommonModule } from '@angular/common';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { RouterModule } from '@angular/router';

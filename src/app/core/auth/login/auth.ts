@@ -1,4 +1,4 @@
-// auth.component.ts
+// login.component.ts
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
-  selector: 'app-auth',
+  selector: 'app-login',
   standalone: true,
   imports: [
     CommonModule,
