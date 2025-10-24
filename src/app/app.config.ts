@@ -14,12 +14,16 @@ import {withNgxsRouterPlugin} from '@ngxs/router-plugin';
 // import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
 import {withNgxsWebSocketPlugin} from '@ngxs/websocket-plugin';
 import {provideStore} from '@ngxs/store';
-import {AuthState} from './core/auth/store/auth/auth.state';
+import {AuthState} from './auth/store/auth/auth.state';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {TokenInterceptor} from './core/auth/interceptors/token.interceptor';
+import {TokenInterceptor} from './auth/interceptors/token.interceptor';
 import {withInterceptorsFromDi} from '@angular/common/http';
+import {NZ_ICONS, provideNzIcons} from 'ng-zorro-antd/icon';
+import {LoginOutline} from '@ant-design/icons-angular/icons';
 
 registerLocaleData(en);
+
+const icons = [ LoginOutline ];
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,6 +31,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes), provideNzI18n(en_US), provideAnimationsAsync(), provideHttpClient(),
     provideStore([AuthState]),
+    provideNzIcons(icons),
     withNgxsReduxDevtoolsPlugin(),
     withNgxsFormPlugin(),
     withNgxsLoggerPlugin(),

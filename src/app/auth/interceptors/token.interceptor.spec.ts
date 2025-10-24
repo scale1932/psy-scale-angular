@@ -1,20 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-
-import { MenuService } from './menu.service';
+import { TokenInterceptor } from './token.interceptor';
 import {provideZonelessChangeDetection} from '@angular/core';
+import {provideStore} from '@ngxs/store';
+import {provideRouter} from '@angular/router';
+import {routes} from '../../app.routes';
 
-describe('MenuService', () => {
-  let service: MenuService;
+describe('TokenInterceptor', () => {
+  let service: TokenInterceptor;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         provideZonelessChangeDetection(),
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi()),
+        provideStore(),
+        provideRouter(routes)
       ]
     });
-    service = TestBed.inject(MenuService);
+    service = TestBed.inject(TokenInterceptor);
   });
 
   it('should be created', () => {

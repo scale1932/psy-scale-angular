@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngxs/store';
 import { CheckAuthStatus, LoginFailed, Logout } from '../store/auth/auth.actions';
-import { environment } from '../../../../environments/environment';
+import { environment } from "../../../environments/environment";
 
 
 // login.service.ts

@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { Layout } from './layout';
+import {provideZonelessChangeDetection} from '@angular/core';
+import {NzLayoutModule} from 'ng-zorro-antd/layout';
+import {provideNzIcons} from 'ng-zorro-antd/icon';
+import {LoginOutline} from '@ant-design/icons-angular/icons';
+import {provideRouter} from '@angular/router';
+import {routes} from '../app.routes';
 
 describe('Layout', () => {
   let component: Layout;
@@ -8,7 +15,13 @@ describe('Layout', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Layout]
+      imports: [Layout, NzLayoutModule],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideHttpClient(withInterceptorsFromDi()),
+        provideRouter(routes),
+        provideNzIcons([LoginOutline])
+      ]
     })
     .compileComponents();
 
