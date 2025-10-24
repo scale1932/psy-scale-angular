@@ -1,22 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-import { Header } from './header';
+import { Layout } from '../../../app/layout/layout';
 import {provideZonelessChangeDetection} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {NzDropDownModule} from 'ng-zorro-antd/dropdown';
-import {provideRouter, RouterModule} from '@angular/router';
-import { NzIconModule, provideNzIcons} from 'ng-zorro-antd/icon';
-import {routes} from '../../app.routes';
+import {NzLayoutModule} from 'ng-zorro-antd/layout';
+import {provideNzIcons} from 'ng-zorro-antd/icon';
 import {LoginOutline} from '@ant-design/icons-angular/icons';
+import {provideRouter} from '@angular/router';
+import {routes} from '../../../app/app.routes';
 
-describe('Header', () => {
-  let component: Header;
-  let fixture: ComponentFixture<Header>;
+describe('Layout', () => {
+  let component: Layout;
+  let fixture: ComponentFixture<Layout>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Header,CommonModule, NzDropDownModule, RouterModule, NzIconModule],
+      imports: [Layout, NzLayoutModule],
       providers: [
         provideZonelessChangeDetection(),
         provideHttpClient(withInterceptorsFromDi()),
@@ -26,7 +25,7 @@ describe('Header', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Header);
+    fixture = TestBed.createComponent(Layout);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

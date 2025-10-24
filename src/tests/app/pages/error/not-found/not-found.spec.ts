@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-import { InternalServerError } from './internal-server-error';
+import { NotFound } from '../../../../../app/pages/error/not-found/not-found';
 import {provideZonelessChangeDetection} from '@angular/core';
 
-describe('InternalServerError', () => {
-  let component: InternalServerError;
-  let fixture: ComponentFixture<InternalServerError>;
+describe('NotFound', () => {
+  let component: NotFound;
+  let fixture: ComponentFixture<NotFound>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InternalServerError],
+      imports: [NotFound],
       providers: [
         provideZonelessChangeDetection(),
         provideHttpClient(withInterceptorsFromDi())
@@ -18,7 +18,7 @@ describe('InternalServerError', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(InternalServerError);
+    fixture = TestBed.createComponent(NotFound);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

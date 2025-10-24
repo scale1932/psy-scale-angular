@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { TokenInterceptor } from './token.interceptor';
+import { TokenInterceptor } from '../../../../app/auth/interceptors/token.interceptor';
 import {provideZonelessChangeDetection} from '@angular/core';
 import {provideStore} from '@ngxs/store';
 import {provideRouter} from '@angular/router';
-import {routes} from '../../app.routes';
+import {routes} from '../../../../app/app.routes';
 
 describe('TokenInterceptor', () => {
   let service: TokenInterceptor;

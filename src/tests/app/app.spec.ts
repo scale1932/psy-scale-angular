@@ -1,9 +1,9 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { App } from './app';
+import { App } from '../../app/app';
 import {provideRouter} from '@angular/router';
-import {routes} from './app.routes';
+import {routes} from '../../app/app.routes';
 import {provideNzIcons} from 'ng-zorro-antd/icon';
 import {LoginOutline} from '@ant-design/icons-angular/icons';
 

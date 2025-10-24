@@ -1,24 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { AuthGuard } from './auth.guard';
-import {provideZonelessChangeDetection} from '@angular/core';
-import {provideStore} from '@ngxs/store';
-import {provideRouter} from '@angular/router';
-import {routes} from '../../app.routes';
 
-describe('AuthGuard', () => {
-  let service: AuthGuard;
+import { MenuService } from '../../../app/services/menu.service';
+import {provideZonelessChangeDetection} from '@angular/core';
+
+describe('MenuService', () => {
+  let service: MenuService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         provideZonelessChangeDetection(),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideStore(),
-        provideRouter(routes),
+        provideHttpClient(withInterceptorsFromDi())
       ]
     });
-    service = TestBed.inject(AuthGuard);
+    service = TestBed.inject(MenuService);
   });
 
   it('should be created', () => {

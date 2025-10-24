@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-import { Home } from './home';
+import { InternalServerError } from '../../../../../app/pages/error/internal-server-error/internal-server-error';
 import {provideZonelessChangeDetection} from '@angular/core';
 
-describe('Home', () => {
-  let component: Home;
-  let fixture: ComponentFixture<Home>;
+describe('InternalServerError', () => {
+  let component: InternalServerError;
+  let fixture: ComponentFixture<InternalServerError>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Home],
+      imports: [InternalServerError],
       providers: [
         provideZonelessChangeDetection(),
         provideHttpClient(withInterceptorsFromDi())
@@ -18,7 +18,7 @@ describe('Home', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Home);
+    fixture = TestBed.createComponent(InternalServerError);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
