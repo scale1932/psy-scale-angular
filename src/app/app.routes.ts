@@ -3,14 +3,9 @@ import {Home} from './pages/home/home';
 import {NotFound} from './pages/error/not-found/not-found';
 import {About} from './pages/about/about';
 import {AuthGuard} from './auth/guards/auth.guard';
-import {AuthComponent} from './auth/login/auth';
 
 // 路由嵌套，注意这里的 path，永远不要以 / 开头
 export const routes: Routes = [
-  {
-    path: 'login',
-    component: AuthComponent
-  },
   {path: '', component: Home},
   {path: 'home', component: Home, canActivate: [AuthGuard]},
   {path: 'about', component: About, canActivate: [AuthGuard]},
