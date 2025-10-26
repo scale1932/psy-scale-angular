@@ -1,0 +1,41 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.register-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 16px;
+}
+
+.register-form-card {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.register-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.captcha-container {
+  display: flex;
+  gap: 8px;
+}
+
+.captcha-button {
+  flex-shrink: 0;
+}
+
+.register-form-button {
+  width: 100%;
+}
+
+.register-form-login {
+  text-align: center;
+  margin-top: 16px;
+}

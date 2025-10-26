@@ -19,11 +19,18 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {TokenInterceptor} from './auth/interceptors/token.interceptor';
 import {withInterceptorsFromDi} from '@angular/common/http';
 import {NZ_ICONS, provideNzIcons} from 'ng-zorro-antd/icon';
-import {LoginOutline} from '@ant-design/icons-angular/icons';
+import {
+  LockOutline,
+  LoginOutline,
+  MailOutline,
+  SafetyCertificateOutline,
+  UserOutline
+} from '@ant-design/icons-angular/icons';
 
 registerLocaleData(en);
 
-const icons = [ LoginOutline ];
+const icons = [ LoginOutline, MailOutline,
+  SafetyCertificateOutline, UserOutline, LockOutline ];
 
 export const appConfig: ApplicationConfig = {
   providers: [

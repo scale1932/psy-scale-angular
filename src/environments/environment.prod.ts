@@ -28,7 +28,8 @@ export const environment = {
     enableAnalytics: true,
     enableDebugTools: false,
     enablePerformanceMonitoring: true,
-    enableErrorTracking: true
+    enableErrorTracking: true,
+    enableCaptcha: true  // 生产环境启用验证码功能
   },
 
   // 日志配置

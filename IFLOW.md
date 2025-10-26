@@ -2,9 +2,9 @@
 
 ## 项目概述
 
-这是一个使用 Angular CLI 20.3.2 创建的 Angular 项目，名为 PsyScaleAngular。该项目集成了 NG-Zorro (Ant Design 的 Angular 实现) 和 NGXS (状态管理库)。
+这是一个使用 Angular CLI 20.3.7 创建的 Angular 项目，名为 PsyScaleAngular。该项目集成了 NG-Zorro (Ant Design 的 Angular 实现) 和 NGXS (状态管理库)。
 
-项目结构遵循标准的 Angular CLI 生成的应用程序布局。
+项目结构遵循标准的 Angular CLI 生成的应用程序布局，并采用现代化的 Angular 应用架构。
 
 ### 主要技术栈
 
@@ -13,7 +13,9 @@
 *   **状态管理**: @ngxs/store 20.1.0 及相关插件
 *   **语言**: TypeScript 5.9.2
 *   **构建工具**: Angular CLI 20.3.7
-*   **测试**: Jasmine 5.9.0, Karma 6.4.0
+*   **测试**: 
+    *   单元测试: Jasmine 5.9.0, Karma 6.4.0
+    *   端到端测试: Playwright 1.56.1
 
 ## 项目结构
 
@@ -25,6 +27,7 @@ psy-scale-angular/
 ├── tsconfig.json         # TypeScript 配置
 ├── tsconfig.app.json     # 应用 TypeScript 配置
 ├── tsconfig.spec.json    # 测试 TypeScript 配置
+├── playwright.config.ts  # Playwright 端到端测试配置
 ├── .editorconfig         # 编辑器配置
 ├── .gitignore            # Git 忽略文件
 ├── public/               # 静态资源目录
@@ -37,11 +40,12 @@ psy-scale-angular/
 │   │   ├── pages/        # 页面组件
 │   │   ├── services/     # 全局服务
 │   │   └── ...           # 其他应用相关文件
-│   ├── assets/           # 应用资源 (已符号链接到 public/assets)
 │   ├── environments/     # 环境配置文件
+│   ├── tests/            # 测试文件目录
 │   ├── index.html        # 主页面
 │   ├── main.ts           # 应用入口点
 │   └── styles.css        # 全局样式
+├── e2e/                  # 端到端测试文件
 ├── dist/                 # 构建输出目录
 └── ...
 ```
@@ -62,7 +66,7 @@ psy-scale-angular/
     *   通常用于前端开发时模拟后端 API。
 
 *   **生产环境服务器**: `npm run start:prod`
-    *   使用 `src/environments/environment.prod.ts` 配置启动服务器 (注意：该文件在项目中不存在，会回退到默认环境)。
+    *   使用 `src/environments/environment.prod.ts` 配置启动服务器。
 
 ### 构建
 
@@ -86,8 +90,11 @@ psy-scale-angular/
 *   **运行单元测试并生成覆盖率报告**: `npm run test:coverage`
     *   执行测试并生成代码覆盖率报告。
 
-*   **运行端到端测试**: `ng e2e`
-    *   Angular CLI 未默认提供 E2E 测试框架，需要自行选择和配置。
+*   **运行端到端测试**: `npm run test:e2e`
+    *   使用 Playwright 执行端到端测试。
+
+*   **查看端到端测试报告**: `npm run test:e2e:report`
+    *   查看 Playwright 测试报告。
 
 ## 开发约定
 
@@ -95,10 +102,9 @@ psy-scale-angular/
 
 *   项目使用 NGXS 管理认证状态 (`AuthState`)。
 *   `AuthService` 负责处理登录、登出、token 刷新等逻辑。
-*   `AuthComponent` 是登录页面。
 *   `AuthGuard` 用于保护需要认证的路由。
 *   `TokenInterceptor` 拦截 HTTP 请求，自动添加认证 token。
-*   环境配置文件 (`environment.ts`, `environment.mock.ts`) 控制认证相关参数和功能开关 (如 mock 数据)。
+*   环境配置文件 (`environment.ts`, `environment.mock.ts`, `environment.prod.ts`) 控制认证相关参数和功能开关。
 
 ### 国际化 (i18n)
 
@@ -119,10 +125,19 @@ psy-scale-angular/
 
 ### 环境配置
 
-*   通过 `src/environments/` 目录下的不同文件 (`environment.ts`, `environment.mock.ts`, `environment.prod.ts`) 管理不同环境的配置。
+*   通过 `src/environments/` 目录下的不同文件管理不同环境的配置：
+    *   `environment.ts` - 开发环境配置
+    *   `environment.mock.ts` - Mock环境配置
+    *   `environment.prod.ts` - 生产环境配置
 *   构建时通过 `--configuration` 参数选择对应的环境文件进行替换。
 
 ### 代码规范
 
 *   项目配置了 Prettier (`prettier` 字段 in `package.json`) 用于代码格式化，设置为 100 字符宽度和单引号。
 *   HTML 文件使用 Angular 解析器。
+
+### 测试策略
+
+*   **单元测试**: 使用 Jasmine 和 Karma，测试文件位于 `src/tests/` 目录
+*   **端到端测试**: 使用 Playwright，测试文件位于 `e2e/` 目录
+*   **测试运行**: 通过 npm 脚本执行各种测试任务

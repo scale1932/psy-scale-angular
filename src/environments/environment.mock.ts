@@ -43,7 +43,8 @@ export const environment = {
     enableAnalytics: false,
     enableDebugTools: true,
     useMockData: true, // 强制使用模拟数据
-    mockDelay: 500 // 模拟网络延迟
+    mockDelay: 500, // 模拟网络延迟
+    enableCaptcha: false  // Mock 环境关闭验证码功能
   },
 
   // 日志配置

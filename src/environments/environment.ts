@@ -25,7 +25,8 @@ export const environment = {
     enableMock: true,
     enableLogger: true,
     enableAnalytics: false,
-    enableDebugTools: true
+    enableDebugTools: true,
+    enableCaptcha: true  // 是否启用验证码功能
   },
 
   // 日志配置
