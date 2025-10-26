@@ -6,7 +6,7 @@ import { HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
-import { Logout, RefreshToken } from '../store/auth/auth.actions';
+import { LogoutAuth, RefreshToken } from '../store/auth/auth.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class TokenInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError(error => {
         if (error.status === 401) {
-          this.store.dispatch(new Logout());
+          this.store.dispatch(new LogoutAuth());
         }
         return throwError(() => error);
       })

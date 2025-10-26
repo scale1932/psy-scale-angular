@@ -6,18 +6,15 @@ import {en_US, provideNzI18n} from 'ng-zorro-antd/i18n';
 import {registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {provideHttpClient} from '@angular/common/http';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {withNgxsReduxDevtoolsPlugin} from '@ngxs/devtools-plugin';
 import {withNgxsFormPlugin} from '@ngxs/form-plugin';
 import {withNgxsLoggerPlugin} from '@ngxs/logger-plugin';
 import {withNgxsRouterPlugin} from '@ngxs/router-plugin';
-// import { withNgxsStoragePlugin } from '@ngxs/storage-plugin';
-import {withNgxsWebSocketPlugin} from '@ngxs/websocket-plugin';
 import {provideStore} from '@ngxs/store';
 import {AuthState} from './auth/store/auth/auth.state';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {TokenInterceptor} from './auth/interceptors/token.interceptor';
-import {withInterceptorsFromDi} from '@angular/common/http';
 import {NZ_ICONS, provideNzIcons} from 'ng-zorro-antd/icon';
 import {
   LockOutline,
@@ -26,6 +23,8 @@ import {
   SafetyCertificateOutline,
   UserOutline
 } from '@ant-design/icons-angular/icons';
+import {tenantInterceptor} from './auth/interceptors/tenant-interceptor';
+import {tokenInterceptor} from './auth/interceptors/token-interceptor';
 
 registerLocaleData(en);
 
@@ -45,7 +44,7 @@ export const appConfig: ApplicationConfig = {
     withNgxsRouterPlugin(),
     // 使用 provideHttpClient 并启用 DI 方式的拦截器
     provideHttpClient(
-      withInterceptorsFromDi()
+      withInterceptors([tenantInterceptor, tokenInterceptor])
     ),
     // 像在 NgModule 中一样提供拦截器类
     {

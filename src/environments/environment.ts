@@ -5,9 +5,7 @@ export const environment = {
 
   // API 配置
   api: {
-    baseUrl: 'http://localhost:4200/api',
-    authUrl: 'http://localhost:4200/api/auth',
-    userUrl: 'http://localhost:4200/api/users',
+    baseUrl: 'http://localhost:48080/admin-api',
     timeout: 30000
   },
 
@@ -26,7 +24,7 @@ export const environment = {
     enableLogger: true,
     enableAnalytics: false,
     enableDebugTools: true,
-    enableCaptcha: true  // 是否启用验证码功能
+    enableCaptcha: false  // 是否启用验证码功能
   },
 
   // 日志配置

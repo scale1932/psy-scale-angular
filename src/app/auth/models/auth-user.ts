@@ -1,9 +1,9 @@
 
 export interface User {
   id: number;
-  username: string;
-  email: string;
-  roles: string[];
+  username?: string;
+  email?: string;
+  roles?: string[];
 }
 
 export interface AccessToken {
@@ -11,11 +11,4 @@ export interface AccessToken {
   expires_in: number;
   access_token: string;
   refresh_token: string;
-}
-
-export enum TokenStatus {
-  VALID,
-  INVALID,
-  PENDING,
-  VALIDATING
 }

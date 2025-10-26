@@ -1,14 +1,14 @@
-import { User } from "../../models/auth-user";
+import {LoginRequest, LoginResponseData} from '../../../models/auth.model';
 
 // login.actions.ts
-export class Login {
+export class LoginAuth {
   static readonly type = '[Auth] Login';
-  constructor(public payload: { username: string; password: string }) {}
+  constructor(public payload: LoginRequest) {}
 }
 
 export class LoginSuccess {
   static readonly type = '[Auth] Login Success';
-  constructor(public payload: { access_token: string; refreshToken: string; user: User }) {}
+  constructor(public payload: LoginResponseData) {}
 }
 
 export class LoginFailed {
@@ -16,7 +16,7 @@ export class LoginFailed {
   constructor(public error: string) {}
 }
 
-export class Logout {
+export class LogoutAuth {
   static readonly type = '[Auth] Logout';
 }
 
@@ -26,7 +26,7 @@ export class RefreshToken {
 
 export class RefreshTokenSuccess {
   static readonly type = '[Auth] Refresh Token Success';
-  constructor(public payload: { token: string; refreshToken: string }) {}
+  constructor(public payload: LoginResponseData) {}
 }
 
 export class CheckAuthStatus {

@@ -1,70 +1,88 @@
-import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
-import { AccessToken } from '../models/auth-user';
-import { of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { Store } from '@ngxs/store';
-import { CheckAuthStatus, LoginFailed, Logout } from '../store/auth/auth.actions';
-import { environment } from "../../../environments/environment";
-
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {Store} from '@ngxs/store';
+import {CheckAuthStatus, RefreshTokenSuccess} from '../store/auth/auth.actions';
+import {environment} from "../../../environments/environment";
+import {LoginRequest, LoginResponse, LoginResponseData, LogoutResponse} from '../../models/auth.model';
+import {map} from 'rxjs/operators';
 
 // login.service.ts
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthService {
   private readonly TOKEN_KEY = 'access_token';
-  private  readonly REFRESH_TOKEN_KEY = 'refresh_token';
+  private readonly REFRESH_TOKEN_KEY = 'refresh_token';
+  private readonly TOKEN_EXPIRATION_KEY = 'token_expiration';
   private readonly baseUrl = environment.api.baseUrl;
-  // const url = `${environment.api.authUrl}/login`;
 
   constructor(
     private http: HttpClient,
     private store: Store
-  ) {}
+  ) {
+  }
 
   initializeAuth(): void {
     this.store.dispatch(new CheckAuthStatus());
   }
 
-  login(credentials: { username: string; password: string }): Observable<AccessToken> {
-    // return this.http.post('/api/login/login', credentials).pipe(
-    //   catchError(error => {
-    //     this.store.dispatch(new LoginFailed(error.message));
-    //     return throwError(() => error);
-    //   })
-    // );
-    return of({
-      access_token: 'dummy_access_token',
-      refresh_token: 'dummy_refresh_token',
-      expires_in: 3600,
-      token_type: 'Bearer'
-    });
-  }
-
-  refreshToken(): Observable<any> {
-    const refreshToken = localStorage.getItem(this.REFRESH_TOKEN_KEY);
-    return this.http.post('/api/auth/refresh', { refreshToken }).pipe(
-      catchError(error => {
-        this.store.dispatch(new Logout());
-        return throwError(() => error);
+  login(credentials: LoginRequest): Observable<LoginResponseData> {
+    return this.http.post<LoginResponse>(this.baseUrl + '/system/auth/login', credentials).pipe(
+      map(response => {
+        if (response.code !== 0) {
+          throw new Error(response.msg || '登录失败');
+        }
+        return response.data!;
       })
     );
   }
 
-  logout(): void {
+  refreshToken(): Observable<LoginResponseData> {
+    return this.http.post<LoginResponse>(this.baseUrl + '/system/auth/refresh-token', {
+      setHeaders:
+        {
+          Authorization: `Bearer ${localStorage.getItem(this.TOKEN_KEY)}`,
+          'tenant-id': 1
+        }
+    }).pipe(
+      map(response => {
+        if (response.code !== 0) {
+          throw new Error(response.msg || '刷新Token失败');
+        }
+        this.storeTokens(response.data!)
+        this.store.dispatch(new RefreshTokenSuccess(response.data!))
+        return response.data!;
+      })
+    );
+  }
+
+  logout(): Observable<boolean> {
+    // TODO 需要看下是否需要修改逻辑
+    this.clearTokens();
+    // 调用服务端的 logout 接口
+    return this.http.post<LogoutResponse>(this.baseUrl + '/system/auth/logout', {}).pipe(
+      map(response => {
+        if (response.code !== 0) {
+          throw new Error(response.msg || '登出失败');
+        }
+        return response.data!;
+      })
+    );
+  }
+
+  storeTokens(payload: LoginResponseData): void {
+    localStorage.setItem(this.TOKEN_KEY, payload.accessToken);
+    localStorage.setItem(this.REFRESH_TOKEN_KEY, payload.refreshToken);
+    localStorage.setItem(this.TOKEN_EXPIRATION_KEY, payload.expiresTime);
+  }
+
+  clearTokens(): void {
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
+    localStorage.removeItem(this.TOKEN_EXPIRATION_KEY);
   }
 
-  storeTokens(token: string, refreshToken: string): void {
-    localStorage.setItem(this.TOKEN_KEY, token);
-    localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken);
+  getAccessToken(): string | null {
+    return localStorage.getItem(this.TOKEN_KEY);
   }
 
-  // 根据环境判断是否使用mock数据
-  // getUsers(): Observable<User[]> {
-  //   if (environment.pages.enableMock) {
-  //     return of(this.getMockUsers());
-  //   }
-  //   return this.http.get<User[]>(`${this.baseUrl}/users`);
-  // }
 }
