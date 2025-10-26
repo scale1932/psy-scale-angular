@@ -7,11 +7,11 @@ import {
   LoginSuccess, LogoutAuth,
   RefreshTokenSuccess
 } from './auth.actions';
-import {AuthService} from '../../services/auth.service';
-import {User} from '../../models/auth-user';
+import {AuthService} from '../../../services/auth.service';
 import {catchError, tap, throwError} from 'rxjs';
 import {Router} from '@angular/router';
-import {LoginResponseData} from '../../../models/auth.model';
+import {LoginResponseData, User} from '../../../models/auth.model';
+import {PermissionsService} from '../../../services/permissions.service';
 
 export interface AuthStateModel {
   accessToken: string | null;
@@ -36,7 +36,7 @@ export interface AuthStateModel {
 })
 @Injectable()
 export class AuthState {
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private permissionsService: PermissionsService, private router: Router) {
   }
 
   @Selector()
@@ -92,6 +92,9 @@ export class AuthState {
       //permissions: user.roles.flatMap(role => role.permissions)
       permissions: []
     });
+
+    // 查询用户角色，权限
+    this.permissionsService.listUserRoles(action.payload.userId);
 
     // 导航到首页
     this.router.navigate(['/home']);

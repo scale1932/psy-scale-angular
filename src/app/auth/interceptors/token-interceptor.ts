@@ -1,6 +1,6 @@
 import {HttpInterceptorFn, HttpRequest} from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { switchMap, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {LoginResponseData} from '../../models/auth.model';

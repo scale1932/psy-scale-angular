@@ -2,23 +2,20 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Store} from '@ngxs/store';
-import {CheckAuthStatus, RefreshTokenSuccess} from '../store/auth/auth.actions';
-import {environment} from "../../../environments/environment";
-import {LoginRequest, LoginResponse, LoginResponseData, LogoutResponse} from '../../models/auth.model';
+import {CheckAuthStatus, RefreshTokenSuccess} from '../auth/store/auth/auth.actions';
+import {environment} from "../../environments/environment";
+import {LoginRequest, LoginResponse, LoginResponseData, LogoutResponse} from '../models/auth.model';
 import {map} from 'rxjs/operators';
+import {BaseService} from './base.service';
 
 // login.service.ts
 @Injectable({providedIn: 'root'})
-export class AuthService {
-  private readonly TOKEN_KEY = 'access_token';
-  private readonly REFRESH_TOKEN_KEY = 'refresh_token';
-  private readonly TOKEN_EXPIRATION_KEY = 'token_expiration';
-  private readonly baseUrl = environment.api.baseUrl;
+export class AuthService extends BaseService{
 
   constructor(
-    private http: HttpClient,
     private store: Store
   ) {
+    super();
   }
 
   initializeAuth(): void {
@@ -26,7 +23,7 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<LoginResponseData> {
-    return this.http.post<LoginResponse>(this.baseUrl + '/system/auth/login', credentials).pipe(
+    return this.httpClient.post<LoginResponse>(this.baseUrl + '/system/auth/login', credentials).pipe(
       map(response => {
         if (response.code !== 0) {
           throw new Error(response.msg || '登录失败');
@@ -37,7 +34,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<LoginResponseData> {
-    return this.http.post<LoginResponse>(this.baseUrl + '/system/auth/refresh-token', {
+    return this.httpClient.post<LoginResponse>(this.baseUrl + '/system/auth/refresh-token', {
       setHeaders:
         {
           Authorization: `Bearer ${localStorage.getItem(this.TOKEN_KEY)}`,
@@ -59,7 +56,7 @@ export class AuthService {
     // TODO 需要看下是否需要修改逻辑
     this.clearTokens();
     // 调用服务端的 logout 接口
-    return this.http.post<LogoutResponse>(this.baseUrl + '/system/auth/logout', {}).pipe(
+    return this.httpClient.post<LogoutResponse>(this.baseUrl + '/system/auth/logout', {}).pipe(
       map(response => {
         if (response.code !== 0) {
           throw new Error(response.msg || '登出失败');

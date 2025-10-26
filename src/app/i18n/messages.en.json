@@ -1,0 +1,55 @@
+{
+  "app": {
+    "name": "Psychological Scale System",
+    "description": "Professional psychological measurement and evaluation platform"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "username": "Username",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "loginButton": "Sign In",
+    "register": "Register",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "registerButton": "Sign Up",
+    "loginSuccess": "Login successful",
+    "loginFailed": "Login failed",
+    "invalidCredentials": "Invalid username or password"
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "scales": "Scales",
+    "users": "Users",
+    "settings": "Settings",
+    "profile": "Profile"
+  },
+  "common": {
+    "actions": "Actions",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "search": "Search",
+    "reset": "Reset",
+    "refresh": "Refresh",
+    "loading": "Loading...",
+    "noData": "No data available"
+  },
+  "validation": {
+    "required": "This field is required",
+    "minlength": "This field must be at least {minlength} characters",
+    "maxlength": "This field must be no more than {maxlength} characters",
+    "email": "Please enter a valid email address"
+  },
+  "errors": {
+    "networkError": "Network error, please check your connection",
+    "serverError": "Server error, please try again later",
+    "unauthorized": "Unauthorized access, please login again"
+  }
+}

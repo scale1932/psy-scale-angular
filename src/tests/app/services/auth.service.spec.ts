@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
-import { AuthService } from '../../../../app/auth/services/auth.service';
+import { AuthService } from '../../../app/services/auth.service';
 import {provideZonelessChangeDetection} from '@angular/core';
 import {provideStore} from '@ngxs/store';
 

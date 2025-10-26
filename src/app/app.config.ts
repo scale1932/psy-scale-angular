@@ -13,8 +13,6 @@ import {withNgxsLoggerPlugin} from '@ngxs/logger-plugin';
 import {withNgxsRouterPlugin} from '@ngxs/router-plugin';
 import {provideStore} from '@ngxs/store';
 import {AuthState} from './auth/store/auth/auth.state';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {TokenInterceptor} from './auth/interceptors/token.interceptor';
 import {NZ_ICONS, provideNzIcons} from 'ng-zorro-antd/icon';
 import {
   LockOutline,
@@ -35,7 +33,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes), provideNzI18n(en_US), provideAnimationsAsync(), provideHttpClient(),
+    provideRouter(routes), provideNzI18n(en_US), provideAnimationsAsync(),
     provideStore([AuthState]),
     provideNzIcons(icons),
     withNgxsReduxDevtoolsPlugin(),
@@ -47,11 +45,11 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([tenantInterceptor, tokenInterceptor])
     ),
     // 像在 NgModule 中一样提供拦截器类
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,
-      multi: true // multi: true 很重要，因为可能有多个拦截器
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: TokenInterceptor,
+    //   multi: true // multi: true 很重要，因为可能有多个拦截器
+    // },
     // withNgxsStoragePlugin(),
     // withNgxsWebSocketPlugin()
   ]
