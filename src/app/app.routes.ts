@@ -9,7 +9,7 @@ import {Register} from './pages/register/register';
 // 路由嵌套，注意这里的 path，永远不要以 / 开头
 export const routes: Routes = [
   {path: '', component: Home},
-  {path: 'home', component: Home, canActivate: [AuthGuard]},
+  {path: 'home', component: Home},
   {path: 'about', component: About, canActivate: [AuthGuard]},
   {path: 'my-evaluations', component: Home, canActivate: [AuthGuard]},
   {path: 'login', component: Login},

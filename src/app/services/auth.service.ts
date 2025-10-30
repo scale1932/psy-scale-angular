@@ -1,9 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
 import {Store} from '@ngxs/store';
 import {CheckAuthStatus, RefreshTokenSuccess} from '../auth/store/auth/auth.actions';
-import {environment} from "../../environments/environment";
 import {LoginRequest, LoginResponse, LoginResponseData, LogoutResponse} from '../models/auth.model';
 import {map} from 'rxjs/operators';
 import {BaseService} from './base.service';
