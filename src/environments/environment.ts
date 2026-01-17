@@ -41,7 +41,7 @@ export const environment = {
     recaptchaSiteKey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI' // 测试用的key
   },
 
-  // 应用配置
+  // 应用配置: 应用信息
   app: {
     version: '1.0.0-dev',
     supportEmail: 'support@dev.example.com',
